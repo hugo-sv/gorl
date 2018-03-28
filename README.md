@@ -1,2 +1,2 @@
 # gorl
-My first Go URL shortener
+My first Go URL shortener.
