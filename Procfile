@@ -1,1 +1,1 @@
-web: /src/gorl
+web: gorl
