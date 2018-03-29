@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/gorl",
+	"ImportPath": "github.com/hugo-sv/gorl",
 	"GoVersion": "go1.10",
 	"GodepVersion": "v80",
 	"Packages": [
