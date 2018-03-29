@@ -14,8 +14,14 @@ func determineListenAddress() (string, error) {
 	}
 	return ":" + port, nil
 }
+
 func hello(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Hello World")
+	url := r.URL.Path
+	if url == "/" {
+		fmt.Fprintln(w, "Welcome on the url shortene !")
+	} else {
+		fmt.Fprintln(w, "The url "+url+" is free, where would you want to redirect ?")
+	}
 }
 func main() {
 	addr, err := determineListenAddress()
@@ -23,6 +29,7 @@ func main() {
 		log.Fatal(err)
 	}
 	http.HandleFunc("/", hello)
+
 	log.Printf("Listening on %s...\n", addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {
 		panic(err)
