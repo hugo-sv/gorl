@@ -22,6 +22,7 @@ func hello(w http.ResponseWriter, r *http.Request) {
 	} else {
 		fmt.Fprintln(w, "The url "+url+" is free, where would you want to redirect ?")
 	}
+	// Chech if the URL is known. if Yes, redirect.
 }
 func main() {
 	addr, err := determineListenAddress()
