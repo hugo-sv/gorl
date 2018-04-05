@@ -1,7 +1,37 @@
-<h1>Go URL shortener</h1>
-{{.Info}}
-<form method="POST">
-<div>Original URL : <input pattern="^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original" value={{.Original}}></div>
-<div>Shortened URL : <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" value={{.Short}}></div>
-<div><input formaction="/" type="submit" value="Create"></div>
-</form>
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+        crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+</head>
+
+<body>
+
+    <h1>Go URL shortener</h1>
+    {{.Info}}
+    <form method="POST">
+        <div>Original URL :
+            <div class="ui icon labeled input">
+                <div class="ui label">
+                    URL
+                </div>
+                <input pattern="^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original"
+                    value={{.Original}} placeholder="http://something.com">
+                <i class="cloud icon"></i>
+            </div>
+            <div class="ui icon labeled input">
+                <div class="ui label">
+                    https://gorl.herokuapp.com/
+                </div>
+                <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" value={{.Short}} placeholder="myurl">
+                <i class="cloud icon"></i>
+            </div>
+            <div>
+                <input formaction="/" type="submit" value="Create">
+            </div>
+    </form>
+</body>
+
+</html>
