@@ -84,7 +84,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			// No short URL is given
-			// @TODO generate a random short URL
+			// @TODO generate a random valid short URL
 			short = "A9oa"
 		}
 		renderTemplate(w, &Page{Info: info, Original: original, Short: short})
