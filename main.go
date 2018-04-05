@@ -38,6 +38,8 @@ func renderTemplate(w http.ResponseWriter, p *Page) {
 }
 
 var validPath = regexp.MustCompile("^/([a-zA-Z0-9]+)?/?$")
+var validShort = regexp.MustCompile("^[-a-zA-Z0-9@:%_+.~#?&//=]*$")
+var validOriginal = regexp.MustCompile("^(https?://)?(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$")
 
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
@@ -62,15 +64,20 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 		if short != "" {
 			// A short URL is given
-			// @TODO Check if short is in the database
+			// Check if short is in the database
 			redirect, _ := getOriginal(m[1])
 			if redirect != "" {
 				// Short URL is already in the database
 				info = BaseURL + short + " is already taken, please try something else."
 			} else if original != "" {
 				// Short URL is free and an URL to redirect is given
-				// @TODO Add these to the database
-				info = BaseURL + short + " will now be redirected to " + original
+				// Add these to the database
+				err := addOriginal(short, original)
+				if err != nil {
+					info = err.Error()
+				} else {
+					info = BaseURL + short + " will now be redirected to " + original
+				}
 			} else {
 				// There is URL to redirect to
 				info = "Where would you like to redirect " + BaseURL + short + " ?"
@@ -83,7 +90,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		renderTemplate(w, &Page{Info: info, Original: original, Short: short})
 		return
 	}
-	// @TODO Check if m[1] exists in the database
+	// Check if m[1] exists in the database
 	redirect, _ := getOriginal(m[1])
 	if redirect != "" {
 		// The url is in the database
@@ -96,11 +103,13 @@ func home(w http.ResponseWriter, r *http.Request) {
 }
 
 func getOriginal(short string) (string, error) {
+	if !validShort.MatchString(short) {
+		return "", fmt.Errorf("Unvalid short url")
+	}
 	var (
 		original string
 	)
-
-	rows, err := db.Query("select short, original from urls where short = "+short, 1)
+	rows, err := db.Query("SELECT short, original FROM urls WHERE short = "+short, 1)
 	if err != nil {
 		return "", err
 	}
@@ -117,6 +126,19 @@ func getOriginal(short string) (string, error) {
 		return "", err
 	}
 	return "", nil
+}
+
+func addOriginal(short string, original string) error {
+	if !validShort.MatchString(short) {
+		return fmt.Errorf("Unvalid short url")
+	}
+	if !validOriginal.MatchString(original) {
+		return fmt.Errorf("Unvalid original url")
+	}
+	if _, err := db.Exec("INSERT INTO urls VALUES (" + short + "," + original + ")"); err != nil {
+		return err
+	}
+	return nil
 }
 
 func main() {
