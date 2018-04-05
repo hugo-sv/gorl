@@ -5,9 +5,10 @@
     <h1>Go URL shortener</h1>
     {{.Info}}
     <br>
+    <br>
     <form method="POST">
         <div>
-            URL
+            URL : 
             <input pattern="^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original"
                 placeholder="http://something.com" value={{.Original}}>
         </div>
@@ -15,8 +16,8 @@
         <div>
             https://gorl.herokuapp.com/
             <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" placeholder="myurl" value={{.Short}}>
-            <input formaction="/" type="submit" value="Create">
         </div>
+        <input formaction="/" type="submit" value="Create">
     </form>
 </body>
 
