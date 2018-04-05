@@ -109,23 +109,11 @@ func getOriginal(short string) (string, error) {
 	var (
 		original string
 	)
-	rows, err := db.Query("SELECT short, original FROM urls WHERE short = '"+short+"'", 1)
+	err := db.QueryRow("SELECT short, original FROM urls WHERE short=?", short).Scan(&short, &original)
 	if err != nil {
 		return "", err
 	}
-	defer rows.Close()
-	for rows.Next() {
-		err := rows.Scan(&short, &original)
-		if err != nil {
-			return "", err
-		}
-		return original, nil
-	}
-	err = rows.Err()
-	if err != nil {
-		return "", err
-	}
-	return "", nil
+	return original, nil
 }
 
 func addOriginal(short string, original string) error {
