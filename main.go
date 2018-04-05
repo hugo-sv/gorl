@@ -135,7 +135,7 @@ func addOriginal(short string, original string) error {
 	if !validOriginal.MatchString(original) {
 		return fmt.Errorf("Unvalid original url")
 	}
-	if _, err := db.Exec("INSERT INTO urls VALUES (" + short + "," + original + ")"); err != nil {
+	if _, err := db.Exec("INSERT INTO urls (short, original) VALUES (" + short + "," + original + ")"); err != nil {
 		return err
 	}
 	return nil
