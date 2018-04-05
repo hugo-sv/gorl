@@ -5,15 +5,16 @@ import (
 	"fmt"
 	"html/template"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"regexp"
+	"time"
 
 	_ "github.com/lib/pq"
 )
 
-// DatabaseURL is the Url of the Postgres database
-//const DatabaseURL = "postgres://oezyzwrclcppmy:0508471cc1b64735ea793a6141c1872756b4c075c8ac521ee4681b855c5ea227@ec2-79-125-110-209.eu-west-1.compute.amazonaws.com:5432/dcqscah58liv58"
+// BaseURL is the Url of the website
 const BaseURL = "gorl.herokuapp.com/"
 
 var (
@@ -77,6 +78,8 @@ func home(w http.ResponseWriter, r *http.Request) {
 					info = aerr.Error()
 				} else {
 					info = BaseURL + short + " will now be redirected to " + original
+					short = ""
+					original = ""
 				}
 			} else {
 				// There is URL to redirect to
@@ -85,7 +88,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// No short URL is given
 			// @TODO generate a random valid short URL
-			short = "A9oa"
+			short = generateShort()
 		}
 		renderTemplate(w, &Page{Info: info, Original: original, Short: short})
 		return
@@ -100,6 +103,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 	// The URL is free
 	http.Redirect(w, r, "/?"+"short"+"="+m[1], http.StatusFound)
 	return
+}
+
+func generateShort() string {
+	const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	for n := 2; n < 11; n++ {
+		// Generating a bigger and bigger url
+		b := make([]byte, n)
+		for i := range b {
+			b[i] = letters[rand.Intn(len(letters))]
+		}
+		if short, _ := getOriginal(string(b)); short == "" {
+			// Checking if the url is valid
+			return string(b)
+		}
+	}
+	return ""
 }
 
 func getOriginal(short string) (string, error) {
@@ -127,6 +146,10 @@ func addOriginal(short string, original string) error {
 		return err
 	}
 	return nil
+}
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
 }
 
 func main() {
