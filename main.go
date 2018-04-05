@@ -99,10 +99,7 @@ func getOriginal(short string) (string, error) {
 	var (
 		original string
 	)
-	db, err := sql.Open("postgres", os.Getenv("DatabaseURL"))
-	if err != nil {
-		return "", err
-	}
+
 	rows, err := db.Query("select short, original from urls where short = "+short, 1)
 	if err != nil {
 		return "", err
@@ -128,7 +125,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db, err = sql.Open("postgres", os.Getenv("DatabaseURL"))
+	db, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
