@@ -65,7 +65,7 @@ func home(w http.ResponseWriter, r *http.Request) {
 		if short != "" {
 			// A short URL is given
 			// Check if short is in the database
-			redirect, gerr := getOriginal(m[1])
+			redirect, gerr := getOriginal(short)
 			if redirect != "" {
 				// Short URL is already in the database
 				info = BaseURL + short + " is already taken, please try something else." + gerr.Error()
