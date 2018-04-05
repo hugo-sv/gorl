@@ -13,7 +13,7 @@ import (
 )
 
 // DatabaseURL is the Url of the Postgres database
-const DatabaseURL = "postgres://oezyzwrclcppmy:0508471cc1b64735ea793a6141c1872756b4c075c8ac521ee4681b855c5ea227@ec2-79-125-110-209.eu-west-1.compute.amazonaws.com:5432/dcqscah58liv58"
+//const DatabaseURL = "postgres://oezyzwrclcppmy:0508471cc1b64735ea793a6141c1872756b4c075c8ac521ee4681b855c5ea227@ec2-79-125-110-209.eu-west-1.compute.amazonaws.com:5432/dcqscah58liv58"
 const BaseURL = "gorl.herokuapp.com/"
 
 var (
@@ -99,7 +99,7 @@ func getOriginal(short string) (string, error) {
 	var (
 		original string
 	)
-	db, err := sql.Open("postgres", os.Getenv(DatabaseURL))
+	db, err := sql.Open("postgres", os.Getenv("DatabaseURL"))
 	if err != nil {
 		return "", err
 	}
@@ -128,7 +128,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	db, err = sql.Open("postgres", os.Getenv(DatabaseURL))
+	db, err = sql.Open("postgres", os.Getenv("DatabaseURL"))
 	if err != nil {
 		log.Fatalf("Error opening database: %q", err)
 	}
