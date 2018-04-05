@@ -1,7 +1,7 @@
 <h1>Go URL shortener</h1>
 {{.Info}}
 <form method="POST">
-<div>Original URL : <input pattern="^(https?://)?(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original" value={{.Original}}></div>
-<div>Shortened URL : <input pattern="^[-a-zA-Z0-9@:%_+.~#?&/=]+$" type="text" name="short" value={{.Short}}></div>
+<div>Original URL : <input pattern="^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original" value={{.Original}}></div>
+<div>Shortened URL : <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" value={{.Short}}></div>
 <div><input formaction="/" type="submit" value="Create"></div>
 </form>

@@ -38,8 +38,8 @@ func renderTemplate(w http.ResponseWriter, p *Page) {
 }
 
 var validPath = regexp.MustCompile("^/([-a-zA-Z0-9@:%_+.~#?&=]+)?/?$")
-var validShort = regexp.MustCompile("^[-a-zA-Z0-9@:%_+.~#?&/=]+$")
-var validOriginal = regexp.MustCompile("^(https?://)?(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$")
+var validShort = regexp.MustCompile("^[-a-zA-Z0-9@:%_+.~#?&=]+$")
+var validOriginal = regexp.MustCompile("^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$")
 
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
@@ -65,22 +65,22 @@ func home(w http.ResponseWriter, r *http.Request) {
 		if short != "" {
 			// A short URL is given
 			// Check if short is in the database
-			redirect, gerr := getOriginal(short)
+			redirect, _ := getOriginal(short)
 			if redirect != "" {
 				// Short URL is already in the database
-				info = BaseURL + short + " is already taken, please try something else." + gerr.Error()
+				info = BaseURL + short + " is already taken, please try something else."
 			} else if original != "" {
 				// Short URL is free and an URL to redirect is given
 				// Add these to the database
 				aerr := addOriginal(short, original)
 				if aerr != nil {
-					info = aerr.Error() + gerr.Error()
+					info = aerr.Error()
 				} else {
-					info = BaseURL + short + " will now be redirected to " + original + " " + gerr.Error()
+					info = BaseURL + short + " will now be redirected to " + original
 				}
 			} else {
 				// There is URL to redirect to
-				info = "Where would you like to redirect " + BaseURL + short + " ?" + gerr.Error()
+				info = "Where would you like to redirect " + BaseURL + short + " ?"
 			}
 		} else {
 			// No short URL is given
