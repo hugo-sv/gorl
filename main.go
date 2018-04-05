@@ -130,7 +130,7 @@ func main() {
 		log.Fatalf("Error opening database: %q", err)
 	}
 
-	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS urls (short VARCHAR(),original VARCHAR())"); err != nil {
+	if _, err := db.Exec("CREATE TABLE IF NOT EXISTS urls (short VARCHAR, original VARCHAR)"); err != nil {
 		log.Fatalf("Error creating table: %q", err)
 	}
 
