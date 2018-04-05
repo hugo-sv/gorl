@@ -37,9 +37,9 @@ func renderTemplate(w http.ResponseWriter, p *Page) {
 	}
 }
 
-var validPath = regexp.MustCompile("^/([a-zA-Z0-9]+)?/?$")
-var validShort = regexp.MustCompile("^[-a-zA-Z0-9@:%_+.~#?&//=]*$")
-var validOriginal = regexp.MustCompile("^(https?://)?(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&//=]*)$")
+var validPath = regexp.MustCompile("^/([-a-zA-Z0-9@:%_+.~#?&=]+)?/?$")
+var validShort = regexp.MustCompile("^[-a-zA-Z0-9@:%_+.~#?&/=]+$")
+var validOriginal = regexp.MustCompile("^(https?://)?(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$")
 
 func determineListenAddress() (string, error) {
 	port := os.Getenv("PORT")
