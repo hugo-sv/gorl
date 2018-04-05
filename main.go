@@ -109,7 +109,7 @@ func getOriginal(short string) (string, error) {
 	var (
 		original string
 	)
-	err := db.QueryRow("SELECT short, original FROM urls WHERE short=?", short).Scan(&short, &original)
+	err := db.QueryRow("SELECT short, original FROM urls WHERE short=?", "'"+short+"'").Scan(&short, &original)
 	if err != nil {
 		return "", err
 	}
