@@ -109,7 +109,7 @@ func getOriginal(short string) (string, error) {
 	var (
 		original string
 	)
-	rows, err := db.Query("SELECT short, original FROM urls WHERE short = "+short, 1)
+	rows, err := db.Query("SELECT short, original FROM urls WHERE short = \""+short+"\"", 1)
 	if err != nil {
 		return "", err
 	}
@@ -135,7 +135,7 @@ func addOriginal(short string, original string) error {
 	if !validOriginal.MatchString(original) {
 		return fmt.Errorf("Unvalid original url")
 	}
-	if _, err := db.Exec("INSERT INTO urls (short, original) VALUES (" + short + "," + original + ")"); err != nil {
+	if _, err := db.Exec("INSERT INTO urls (short, original) VALUES ( \"" + short + "\",\"" + original + "\")"); err != nil {
 		return err
 	}
 	return nil
