@@ -1,10 +1,10 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./semantic/semantic.min.css">
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
         crossorigin="anonymous"></script>
-    <script src="semantic/dist/semantic.min.js"></script>
+    <script src="./semantic/semantic.min.js"></script>
 </head>
 
 <body>
@@ -18,14 +18,14 @@
                     URL
                 </div>
                 <input pattern="^(https?://)(www[.])?[-a-zA-Z0-9@:%._+~#=]{2,256}[.][a-z]{2,4}([-a-zA-Z0-9@:%_+.~#?&/=]*)$" type="text" name="original"
-                    value={{.Original}} placeholder="http://something.com">
+                placeholder="http://something.com" value={{.Original}}>
                 <i class="cloud icon"></i>
             </div>
             <div class="ui icon labeled input">
                 <div class="ui label">
                     https://gorl.herokuapp.com/
                 </div>
-                <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" value={{.Short}} placeholder="myurl">
+                <input pattern="^[-a-zA-Z0-9@:%_+.~#?&=]+$" type="text" name="short" placeholder="myurl" value={{.Short}}>
                 <i class="cloud icon"></i>
             </div>
             <div>
